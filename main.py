@@ -2,7 +2,6 @@ import pandas as pd
 from PyPDF2 import PdfFileWriter, PdfFileReader
 import os
 import json
-from Receipts import Receipts
 
 
 def get_data(values):
