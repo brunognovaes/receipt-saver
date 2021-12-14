@@ -5,6 +5,21 @@ import json
 from Receipts import Receipts
 
 
+def get_data(values):
+    data = {
+        'ted': [],
+        'bol': [],
+    }
+    historic_column = values['HISTÓRICO']
+
+    for v in historic_column:
+        if historic_column[v] == 'DÉB.TIT.COMPE EFETIVADO':
+            data['bol'].append(historic_column[str(int(v) + 1)])
+        if historic_column[v] == 'DEBITO EMISSÃO TED DIF.TITULARIDADE':
+            data['ted'].append(historic_column[str(int(v) + 2)])
+    return data
+
+
 def save_pdfs(values, pdf_path, save_path='./'):
     pdf_reader = PdfFileReader(pdf_path)
     for v in range(len(values)):
@@ -30,7 +45,7 @@ def save_pdfs(values, pdf_path, save_path='./'):
 infos_json = json.loads(pd.read_excel(
     './examples/extrato.xls', skiprows=2).to_json())
 
-receipts = Receipts(values=infos_json).get_data()
+receipts = get_data(infos_json)
 
 bol_path = './examples/BOL.pdf'
 ted_path = './examples/TED.pdf'
