@@ -33,7 +33,6 @@ def get_data(values):
                 receipt_value = value_column[v]
                 data['conv'].append(receipt_value.replace('D', ''))
         if 'DÉB.TRANSF.CONTAS' in current_value:
-            print('here!!')
             receipt_value = value_column[v]
             data['ted'].append(receipt_value.replace('D', ''))
     return data
