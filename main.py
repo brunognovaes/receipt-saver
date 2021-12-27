@@ -58,20 +58,24 @@ def save_pdfs(values, pdf_path, save_path='./'):
             file_name = f'{values[v]}{file_name_extension}.pdf'
             full_name = os.path.join(save_path, file_name)
 
+        if not os.path.isdir(save_path):
+            os.mkdir(save_path)
+
         with open(full_name, 'wb') as f:
+
             pdf_writer.write(f)
             f.close()
 
 
 infos_json = json.loads(pd.read_excel(
-    './examples/EXTRATO.xls', skiprows=2).to_json())
+    './pdfs/EXTRATO.xls', skiprows=2).to_json())
 
 receipts = get_data(infos_json)
 
-bol_path = './examples/BOL.pdf'
-ted_path = './examples/TED.pdf'
-conv_path = './examples/CONV.pdf'
-save_path = './receipts'
+bol_path = './pdfs/BOL.pdf'
+ted_path = './pdfs/TED.pdf'
+conv_path = './pdfs/CONV.pdf'
+save_path = './comprovantes'
 
 save_pdfs(receipts['bol'], bol_path, save_path=save_path)
 save_pdfs(receipts['ted'], ted_path, save_path=save_path)
