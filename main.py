@@ -46,15 +46,18 @@ def save_pdfs(values, pdf_path, save_path='./'):
         pdf_writer.addPage(page)
         file_name_extension = ''
 
-        if os.path.isfile(f'{values[v]}.pdf'):
+        file_name = f'{values[v]}.pdf'
+        full_name = os.path.join(save_path, file_name)
+
+        if os.path.isfile(f'{full_name}'):
             acc = 2
             while os.path.isfile(f'{values[v]}({acc}).pdf'):
                 acc = acc + 1
 
             file_name_extension = f'({acc})'
+            file_name = f'{values[v]}{file_name_extension}.pdf'
+            full_name = os.path.join(save_path, file_name)
 
-        file_name = f'{values[v]}{file_name_extension}.pdf'
-        full_name = os.path.join(save_path, file_name)
         with open(full_name, 'wb') as f:
             pdf_writer.write(f)
             f.close()
